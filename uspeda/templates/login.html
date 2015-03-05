@@ -1,0 +1,75 @@
+<div class="right-panel" id="login-panel">
+  <div id="login">
+    <div class="panel panel-primary login-panel">
+      {% with messages = get_flashed_messages() %}
+      <div class="panel-heading">Entre
+        {% for message in messages %}
+          <p class="s-msgs">{{ message }}</p>
+        {% endfor %}
+      {% endwith %}
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal" role="form" method="post" id="login-form" action="/login">
+        <div class="form-group">
+          <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+          <div class="col-sm-9">
+            <input type="email" class="form-control" name="email" id="inputEmail" placeholder="email@usp.br"  maxlength="60" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="col-sm-3 control-label">Senha</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" name="password" id="inputPassword" maxlength="60" required>
+          </div>
+        </div>
+        <div class="form-group last">
+          <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary btn-sm">Entrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="panel-footer">Não é registrado? <a href="#" id="register-link">Registre-se</a></div>
+  </div>
+</div>
+<div id="register" style="display:none">
+  <div class="panel panel-primary">
+    {% with messages = get_flashed_messages() %}
+    <div class="panel-heading">Registre-se
+      <p id="c-errors"></p>
+      {% for message in messages %}
+        <p class="s-msgs">{{ message }}</p>
+      {% endfor %}
+    {% endwith %}
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" role="form" method="post" id="register-form" action="/register">
+      <div class="form-group">
+        <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+        <div class="col-sm-9">
+          <input type="email" class="form-control" name="email" id="inputEmail" placeholder="email@usp.br" maxlength="60" required >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword" class="col-sm-3 control-label">Senha</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" name="password" id="inputPassword" placeholder="mínimo 10 dígitos" maxlength="60" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword2" class="col-sm-3 control-label"></label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" name="password2" id="inputPassword2" placeholder="confirme a senha" maxlength="60" required>
+        </div>
+      </div>
+      <div class="form-group last">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="panel-footer">Já é registrado? <a href="#" id="login-link">Entre</a></div>
+</div>
+</div>
+</div>

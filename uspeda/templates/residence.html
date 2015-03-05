@@ -1,0 +1,87 @@
+<!-- infoWindow content for right click on residence -->
+<div class="infowindow" id="map-reviews">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      {{ reviews[0].residence.name }} - Nota média: {{ reviews[0].residence.avg_score }}
+    </div>
+    <div class="panel-body">
+      <p>Proprietário: <span>{{ reviews[0].residence.owner }}</span></p>
+      <p>Endereço: <span>{{ reviews[0].residence.address }}</span></p>
+      <p>CEP: <span>{{ reviews[0].residence.zipcode }}</span></p>
+    </div>
+    <ul class="nav nav-tabs" id="map-tab" role="tablist">
+      <li role="presentation" class="active"><a href="#see-reviews" role="tab" data-toggle="tab" id="see-reviews-nav">Ver reviews</a></li>
+      <li role="presentation"><a href="#add-review" role="tab" data-toggle="tab" id="add-review-nav">Adicionar review</a></li>
+    </ul>
+    <div id="tabContent" class="tab-content">
+      <!-- see reviews -->
+      <div role="tabpanel" class="tab-pane fade active in" id="see-reviews">
+        <div class="panel-body" id="map-see-reviews">
+          <table class="table table-hover small map-reviews-table">
+            <thead>
+              <tr>
+                <th>Autor</th>
+                <th>Data</th>
+                <th>Nota</th>
+              </tr>
+            </thead>
+            <tbody id="map-reviews-body" style="display:none;">
+              {% set page = reviews|length//5 %}
+              {% set item = reviews|length %}
+              {% for review in reviews %}
+                <tr class="map-reviews-page-{{ page }} map-review-row" data-page="{{ page }}" data-item="{{ item - loop.index }}" data-revid="{{ review.id }}" style="display:none;">
+                  {% if loop.index is divisibleby 5 %}
+                    {% set page = page - 1 %}
+                  {% endif %}
+                  <td>{{ review.user.email.split('@')[0] }}</td>
+                  <td>{{ review.date_added }}</td>
+                  <td>{{ review.score }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pager small">
+              <li class="previous disabled" id="previous-map-reviews-page"><a href="#"><span aria-hidden="true">&larr;</span> Anteriores</a></li>
+              <li class="next enabled" id="next-map-reviews-page"><a href="#">Próximos <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- Adicionar review -->
+      <div role="tabpanel" class="tab-pane fade in" id="add-review">
+        <div class="panel-body add-review-body">
+          <form class="form-horizontal" role="form" name="map-review-form" method="post" id="map-review-form" action="/add_review">
+            <input type="hidden" id="mapResId" name="mapResId" value="{{ reviews[0].residence.id }}">
+            <div class="form-group">
+              <label for="mapInputScore" class="col-sm-3 control-label">Nota: </label>
+              <div class="col-sm-9">
+                <select class="form-control" name="mapInputScore" id="mapInputScore" form="map-review-form">
+                  <option value="1">1 - Péssimo</option>
+                  <option value="2">2 - Ruim</option>
+                  <option value="3">3 - Razoável</option>
+                  <option value="4">4 - Bom</option>
+                  <option value="5">5 - Ótimo</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <label for="mapInputRevText">Review (até 1000 caracteres):</label>
+                <textarea class="form-control textarea" name="mapInputRevText" rows="5" id="mapInputRevText"></textarea>
+              </div>
+            </div>
+            <div class="form-group last">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary btn-sm">Submeter</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="panel-body add-review-body" style="display:none">
+          <p>Seu review foi enviado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

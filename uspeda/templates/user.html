@@ -1,0 +1,76 @@
+<!-- modal place holder; see uspeda.js/residenceDialog() --> 
+<div class="panel panel-primary right-panel" id="user-panel">
+  {% with messages = get_flashed_messages() %}
+  <div class="panel-heading" id="user-panel-header">
+    <span class="glyphicon glyphicon-minus-sign" id="user-resize" aria-hidden="true"></span>
+    <span id="user-panel-name"> {{ email }}</span>
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  {% endwith %}
+</div>
+<div class="panel-body" id="user-panel-body">
+  <div class="row">
+    <div class="col-sm-12">
+      <h4>Meus reviews</h4>
+      <table class="table table-hover small reviews-table">
+        <thead>
+          <tr>
+            <th>Local</th>
+            <th>Proprietário</th>
+            <th>Data</th>
+            <th>Nota</th>
+          </tr>
+        </thead>
+        <tbody id="reviews-body" style="display:none;">
+        {% if reviews %}
+          {% set page = reviews|length//5 %}
+          {% set item = reviews|length %}
+          {% for review in reviews %}
+            <tr class="review-row reviews-page-{{ page }} " data-page="{{ page }}" data-item="{{ item - loop.index }}" data-revid="{{ review.id }}" style="display:none">
+              {% if loop.index is divisibleby 5 %}
+                {% set page = page - 1 %}
+              {% endif %}
+              <td>{{ review.residence.name }}</td>
+              <td>{{ review.residence.owner }}</td>
+              <td>{{ review.date_added }}</td>
+              <td>{{ review.score }}</td>
+            </tr>
+          {% endfor %}
+        {% else %} <!-- placeholder --> 
+            <tr class="review-row reviews-page-0 " data-page="0" data-item="-1" data-revid="-1" style="display:none">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr> <!-- end placeholder --> 
+        {% endif %}
+        </tbody>
+      </table>
+      <nav>
+        <ul class="pager small">
+          <li class="previous disabled" id="previous-reviews-page"><a href="#"><span aria-hidden="true">&larr;</span> Anteriores</a></li>
+          <li class="next enabled" id="next-reviews-page"><a href="#">Próximos <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12">
+    <h4>Residências</h4>
+      <input type="checkbox" id="see-filter"> Filtrar residências por nota<span id="score-filter-value" style="display:none">: 3</span>
+      <input type="range" name="avg_score" min="1" max="5" id="score-filter" style="display:none">
+    </div>
+  </div>
+  <hr>
+  <div class="row" >
+    <div class="col-sm-12">
+    <h4>Crimes</h4>
+      <input type="checkbox" id="see-crimes"> Ver crimes no mapa
+    </div>
+  </div>
+</div>
+<div class="panel-footer" id="logout"><a href="/logout">Sair</a></div>
+<!-- placeholder for reviews modal --> 
+<div class="modal" tabindex="-1" role="dialog" id="review-modal" aria-labelledby="review-modal" aria-hidden="true"></div>

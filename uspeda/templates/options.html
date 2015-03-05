@@ -1,0 +1,94 @@
+<!-- infoWindow content for empty space click -->
+<div class="infowindow" id="map-options">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      Opções
+    </div>
+    <ul class="nav nav-tabs spacer" id="map-tab" role="tablist">
+      <li role="presentation" class="active"><a href="#add-review" role="tab" data-toggle="tab" id="add-review-nav">Adicionar review</a></li>
+      <li role="presentation"><a href="#add-crime" role="tab" data-toggle="tab" id="add-review-nav">Reportar crime</a></li>
+    </ul>
+    <div id="tabContent" class="tab-content">
+    <!-- add review --> 
+      <div role="tabpanel" class="tab-pane fade active in" id="add-review">
+        <div class="panel-body">
+          <form class="form-horizontal" role="form" method="post" id="review-form" action="/add_review">
+            <div class="form-group">
+              <label for="inputOwner" class="col-sm-3 control-label">Proprietário: </label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="inputOwner" id="inputOwner" placeholder="José de Alencar" required maxlength="50">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputResName" class="col-sm-3 control-label">Residência: </label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="inputResName" id="inputResName" placeholder="Pensionato do Bandeira" maxlength="50" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputAddress" class="col-sm-3 control-label">Endereço: </label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="inputAddress" id="inputAddress" placeholder="Rua Mario de Andrade, 1929" required maxlength="100">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputZipcode" class="col-sm-3 control-label">CEP (opcional): </label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="inputZipcode" id="inputZipcode" placeholder="12345-678" maxlength="10">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputScore" class="col-sm-3 control-label">Nota: </label>
+              <div class="col-sm-9">
+                <select class="form-control" name="inputScore" id="inputScore" form="review-form" required>
+                  <option value="1">Péssimo</option>
+                  <option value="2">Ruim</option>
+                  <option value="3">Razoável</option>
+                  <option value="4">Bom</option>
+                  <option value="5">Ótimo</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <label for="inputRevText">Review (até 1000 caracteres):</label>
+                <textarea class="form-control textarea" name="inputRevText" rows="5" id="inputRevText" maxlength="1000" required></textarea>
+              </div>
+            </div>
+            <div class="form-group last">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary btn-sm">Submeter</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Crime report -->
+      <div role="tabpanel" class="tab-pane fade in" id="add-crime">
+        <div class="panel-body">
+          <form class="form-horizontal" role="form" method="post" id="crime-form" action="/add_crime">
+            <div class="form-group">
+              <label for="inputScore" class="col-sm-3 control-label">Selecione o tipo de crime:</label>
+              <div class="col-sm-9">
+                <select class="form-control" name="inputCrimeWeight" id="inputCrimeWeight" form="review-form">
+                  <option value="2">Furto</option>
+                  <option value="3">Assalto à mão armada</option>
+                  <option value="2">Assalto coletivo</option>
+                  <option value="3">Sequestro Relâmpago</option>
+                  <option value="2">Arrombamento Domiciliar</option>
+                  <option value="2">Roubo de veículo</option>
+                  <option value="1">Outro</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group last">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary btn-sm">Submeter</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

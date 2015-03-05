@@ -1,0 +1,45 @@
+html, body, #map-canvas, .container-fluid
+{
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+#login-panel, #user-panel
+{
+    position: absolute;
+    top: 3%;
+    right: 1%;
+}
+
+body
+{
+    font-family: 'Droid Sans', sans-serif;
+}
+#uspeda-logo
+{
+    right:1%;
+    position: absolute;
+    bottom: 3%;
+}
+
+.spacer 
+{
+    margin-top: 20px;
+}
+
+#reviews-body, #map-reviews-body, #user-panel-header
+{
+    cursor: pointer;
+}
+
+.textarea
+{
+    resize: none;
+}
+
+.infowindow
+{
+     width: 350px;
+}

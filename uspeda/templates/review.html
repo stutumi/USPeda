@@ -1,0 +1,96 @@
+<div class="modal-dialog">
+<!-- review modal -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">{{ review.residence.name }}</h4>
+    </div>
+    <div class="modal-body">
+      <p>Endereço: <span>{{ review.residence.address }}</span></p>
+      <p>CEP: <span>{{ review.residence.zipcode }}</span></p>
+      <p>Nota: <span id="review-score">{{ review.score }}</span></p>
+      <p>Seu review: <span id="review-text">{{ review.review_text }}</span></p>
+      <p><button type="button" class="btn btn-primary btn-sm" id="review-update-btn">Editar</button></p>
+    </div>
+
+    <!-- edit part --> 
+    <div class="modal-body" style="display:none">
+      <p></p>
+      <form class="form-horizontal" role="form" method="post" name="review-update-form" id="review-update-form" action="/update_review">
+        <div class="form-group">
+          <input type="hidden" id="updateRevId" name="updateRevId" value="{{ review.id }}">
+          <label for="updateInputScore" class="col-sm-3 control-label">Nota: </label>
+          <div class="col-sm-9">
+            <select class="form-control" name="updateInputScore" id="updateInputScore" form="review-form">
+              <option value="1">1 - Péssimo</option>
+              <option value="2">2 - Ruim</option>
+              <option value="3">3 - Razoável</option>
+              <option value="4">4 - Bom</option>
+              <option value="5">5 - Ótimo</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="updateInputRevText">Review (até 1000 caracteres):</label>
+            <textarea class="form-control textarea" name="updateInputRevText" rows="5" id="updateInputRevText" maxlength="1000" required></textarea>
+          </div>
+        </div>
+        <div class="form-group last">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary btn-sm">Submeter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script> 
+  // Edit/update review
+  $(function() { 
+    email = '{{ email }}'
+    review_email = '{{ review.user.email }}'
+    if(email != review_email) {
+      $("#review-update-btn").remove()
+    }
+    else {
+      // copy old text to the form
+      $("#review-update-btn").click(function() {
+        old_review_text = $("#review-text").text()
+        old_review_score = $("#review-score").text()
+        $("#updateInputRevText").val(old_review_text)
+        $('select[name=updateInputScore]').val(old_review_score)
+        $(".modal-body").toggle()
+        $("#updateInputRevText").focus()
+      });
+      // update review with new data
+      $("#review-update-form").submit(function(e) {
+        e.preventDefault();
+        data = {
+          lat: 0,
+          lng: 0,
+          owner: '_',
+          res_name: '_',
+          zipcode: '_',
+          address: '_',
+          review_text: $("#updateInputRevText").val(),
+          score: $('select[name=updateInputScore]').val(),
+          review_id: '{{ review.id }}'
+        }
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            url: '/update_review',
+            success: function (response) {
+                $(".modal-body").toggle()
+                $("#review-text").text(data.review_text)
+                $("#review-score").text(data.score)
+                $("tr[data-revid='" + data.review_id + "']").children().last().text(data.score)
+            }
+        });
+      });
+    }
+  });
+  </script>
+</div>
