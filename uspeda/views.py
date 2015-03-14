@@ -148,30 +148,6 @@ def confirm_reg():
     return redirect(url_for('index'))
 
 
-def validate_creds(email, password, password2):
-    '''
-    Check if user info is good enough 
-    '''
-    # Matches @*usp.br domain
-    if re.match("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+"
-                "@(?:[a-zA-Z0-9\-]+\.)?usp\.br$", email, re.IGNORECASE):
-        # Is it already registered?
-        user_q = User.query.filter_by(email=email).first()
-        if user_q:
-            flash('ERRO: Usuário já registrado!')
-            return False
-        if len(password) > 10:
-            if password == password2:
-                return True
-            else:
-                flash('ERRO: Senhas não conferem!')
-        else:
-            flash('ERRO: Senha deve ter pelo menos 10 dígitos!')
-    else:
-        flash('ERRO: Utilize o e-mail acadêmico da USP!')
-    return False
-
-
 @app.route('/login', methods=['POST'])
 def login():
     '''
