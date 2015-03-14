@@ -1,5 +1,5 @@
 # USPeda
-A website for USP students find a good house to live based on reviews.
+A website for USP students find a good house to live based on reviews and local crime data.
 
 <img src="https://raw.githubusercontent.com/wcastello/USPeda/master/screenshots/sshot4.png" width="400"> 
 <img src="https://raw.githubusercontent.com/wcastello/USPeda/master/screenshots/sshot03.png" width="400"> 
